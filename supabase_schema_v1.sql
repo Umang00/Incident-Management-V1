@@ -41,16 +41,7 @@ create table if not exists resolved_incidents_v1 (
   -- Flexible structured metadata (severity, systems, mitre, etc.)
   metadata jsonb not null default '{}'::jsonb,
 
-  -- Extracted fields for direct querying
-  description text,
-  alert_source text,
-  rule_name text,
-  entities jsonb default '{}'::jsonb,
-
-  -- Postmortem quality fields (added Phase 1 enrichment pass)
-  detection_gap text,                              -- The specific control that failed or was absent
-  what_went_well jsonb default '[]'::jsonb,        -- Positive observations from the incident
-  what_went_wrong jsonb default '[]'::jsonb,       -- Failure points identified in the postmortem
+  -- Explicit columns removed; all contextual data is managed via the metadata JSONB payload
 
   -- Gemini embedding vector
   embedding vector(3072) not null,
@@ -127,8 +118,10 @@ create table if not exists test_incidents_v1 (
   type text,
   severity text,
   status text,
+  assigned_to text,
   "@timestamp" timestamptz,
   affected_systems jsonb DEFAULT '[]'::jsonb,
+  mitre jsonb DEFAULT '{}'::jsonb,
   mitre_tactic_ids jsonb DEFAULT '[]'::jsonb,
   mitre_technique_ids jsonb DEFAULT '[]'::jsonb,
   mitre_prevention_ids jsonb DEFAULT '[]'::jsonb,
@@ -231,10 +224,14 @@ AS $$
   SELECT
     p.content,
 
-    -- Embed id + name inside metadata for Vector Store
+    -- Embed id + name + full_text inside metadata for downstream nodes.
+    -- full_text uses p.content (the embedded text IS the full playbook in V1).
+    -- This restores V0 behaviour: $json.metadata.full_text is always populated,
+    -- so no separate Get row lookup or IF node is required in the workflow.
     jsonb_build_object(
       'id', p.id,
-      'name', p.metadata->>'name'
+      'name', p.metadata->>'name',
+      'full_text', p.content
     ) AS metadata,
 
     1 - (p.embedding <=> query_embedding) AS similarity
