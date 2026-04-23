@@ -1232,7 +1232,7 @@
         2336
       ],
       "id": "dc094fef-85a8-4dd1-9ab9-56161b94b0b5",
-      "name": "No Operation, do nothing"
+      "name": "Replace With Error Notification Workflow"
     },
     {
       "parameters": {
@@ -2076,7 +2076,7 @@
         ],
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "Replace With Error Notification Workflow",
             "type": "main",
             "index": 0
           }

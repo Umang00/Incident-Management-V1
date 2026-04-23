@@ -48,6 +48,6 @@ To prevent hallucinations, the Synthesizer is hard-coded with a **Trust Hierarch
 ### Step 5 & 6: Structured Validation & Output
 To be useful to a SOC team, an AI tool must be predictable. 
 
-The Synthesizer does not output raw markdown text. It uses a **Structured Output Parser** to force the LLM to return a strict JSON object. Immediately following the parser, an n8n `If` node validates the output. If the `incident_summary` or `immediate_actions` fields are missing, the payload is dropped to prevent sending malformed data to the SIEM or ticketing system.
+The Synthesizer does not output raw markdown text. It uses a **Structured Output Parser** to force the LLM to return a strict JSON object. Immediately following the parser, an n8n `If` node validates the output. If the `incident_summary` or `immediate_actions` fields are missing, the workflow follows the `false` branch to a **"Replace With Error Notification Workflow"** node. Since we don't provide out-of-the-box alerts, this is a placeholder where users should connect their own Slack/Email notification nodes to alert the team that the pipeline failed and requires manual re-run.
 
-Only fully-validated, 8-section runbooks are written to the database.
+Only fully-validated, 11-section runbooks are written to the database.
