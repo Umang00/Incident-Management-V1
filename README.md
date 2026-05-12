@@ -117,6 +117,7 @@ Incident Management/
 ├── docs/                          # Deep-dive documentation:
 │   ├── quickstart.md              # Setup and execution guide
 │   ├── architecture.md            # Data flow and schema contracts
+│   ├── production-readiness.md    # Enterprise deployment considerations
 │   ├── research.md                # Rationale for AI choices
 │   └── roadmap.md                 # Future planned extensions
 ├── Incident Management.json       # The core n8n workflow to import
@@ -136,6 +137,8 @@ We support a frictionless execution path to test the pipeline directly from your
 1. **The 5-Minute Demo Path:** Click "Test workflow" and watch the workflow generate a runbook for a pre-loaded test incident.
 
 👉 **[Go to the Quickstart Guide](./docs/quickstart.md)** to configure your database, import the workflow, and run your first incident.
+
+👉 **[Ready for Production? Read the Production Readiness Guide](./docs/production-readiness.md)** to learn how to integrate this workflow with your SIEM, SOAR, and ticketing systems.
 
 ---
 

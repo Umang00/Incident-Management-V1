@@ -211,3 +211,9 @@ For the workflow to process alerts correctly, the incoming incident payload stor
 
 > [!IMPORTANT]  
 > The `description` and `entities` fields are explicitly required by the downstream AI agents to extract Threat Intel and match historical playbooks accurately. Do not omit them.
+
+---
+
+## 🏭 Next Steps: Production Readiness
+
+Running a local test incident is just the beginning. To integrate this workflow fully into your enterprise Security Operations Center (SOC) with SIEM/SOAR syncing and ticketing system integration, read the **[Production Readiness & Enterprise Integrations Guide](./production-readiness.md)**.
